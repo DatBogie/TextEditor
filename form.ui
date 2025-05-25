@@ -229,7 +229,10 @@
     <iconset theme="QIcon::ThemeIcon::EditDelete"/>
    </property>
    <property name="text">
-    <string>&amp;Delete</string>
+    <string>&amp;Delete File</string>
+   </property>
+   <property name="toolTip">
+    <string>Delete File</string>
    </property>
    <property name="shortcut">
     <string>Alt+Shift+Backspace</string>
