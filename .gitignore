@@ -39,6 +39,7 @@ Thumbs.db
 *.pyproject.user*
 *.qbs.user*
 CMakeLists.txt.user*
+.qtcreator
 
 # xemacs temporary files
 *.flc
