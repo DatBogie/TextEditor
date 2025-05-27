@@ -128,7 +128,19 @@ class MainWindow(QMainWindow):
                 self.initial_data = f.read()
                 self.ui.plainTextEdit.setPlainText(self.initial_data)
                 self.text_edited()
-        except Exception as e: err(e)
+        except UnicodeDecodeError:
+            with open(p, "rb") as f:
+                self.reset()
+                self.ui.plainTextEdit.setVisible(True)
+                self.active_file = QFileInfo(p)
+                self.file_exists = True
+                self.ACTIVE_TITLE = self.active_file.fileName() + " — " + self.TITLE
+                self.setWindowTitle(self.ACTIVE_TITLE)
+                self.initial_data = str(f.read())
+                self.ui.plainTextEdit.setPlainText(self.initial_data)
+                self.text_edited()
+        except Exception as e:
+            err(e)
     def del_file(self):
         if not self.active_file or not self.file_exists: return
         act = QMessageBox.warning(self,"Delete File — " + self.TITLE,f"Delete {self.active_file.fileName()} permanently?",QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No,QMessageBox.StandardButton.No)
