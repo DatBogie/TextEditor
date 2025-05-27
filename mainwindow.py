@@ -2,14 +2,15 @@
 import sys, os
 
 from PySide6.QtCore import QStandardPaths
-from PySide6.QtWidgets import QApplication, QMainWindow, QFileDialog, QMessageBox
+from PySide6.QtWidgets import QApplication, QMainWindow, QFileDialog, QMessageBox, QDialog
 from PySide6.QtCore import QFileInfo
 
 # Important:
 # You need to run the following command to generate the ui_form.py file
-#     pyside6-uic form.ui -o ui_form.py, or
-#     pyside2-uic form.ui -o ui_form.py
+#     pyside6-uic form.ui -o ui_form.py
+#     pyside6-uic about.ui -o ui_about.py
 from ui_form import Ui_MainWindow
+from ui_about import Ui_Dialog
 
 class PlaceHolderFile():
     def __init__(self, name:str):
@@ -28,6 +29,7 @@ class MainWindow(QMainWindow):
         self.active_file = None
         self.file_exists = False
         self.initial_data = ""
+        self.about = AboutWindow(self)
         
         self.ui.plainTextEdit.setVisible(False)
         
@@ -43,6 +45,7 @@ class MainWindow(QMainWindow):
         self.ui.actionZoomOut.triggered.connect(self.decr_font)
         self.ui.actionDelete.triggered.connect(self.del_file)
         self.ui.actionExit.triggered.connect(self.close)
+        self.ui.actionAbout.triggered.connect(lambda: self.about.show())
     def closeEvent(self,event):
         if not self.safe_close(): return event.ignore()
         event.accept()
@@ -158,6 +161,12 @@ class MainWindow(QMainWindow):
     def decr_font(self):
         self.set_font_size(self.ui.plainTextEdit.font().pointSize()-1)
 
+class AboutWindow(QDialog):
+    def __init__(self, parent):
+        super().__init__(parent)
+        self.setWindowTitle("About — TextEditor")
+        self.ui = Ui_Dialog()
+        self.ui.setupUi(self)
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
