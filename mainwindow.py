@@ -48,7 +48,7 @@ class MainWindow(QMainWindow):
         event.accept()
     def text_edited(self):
         if self.initial_data != self.ui.plainTextEdit.toPlainText():
-            self.setWindowTitle(self.ACTIVE_TITLE + "*")
+            self.setWindowTitle("*" + self.ACTIVE_TITLE)
         else:
             self.setWindowTitle(self.ACTIVE_TITLE)
     def reset(self):
